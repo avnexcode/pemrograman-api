@@ -1,32 +1,27 @@
 "use client"
 import React from "react"
+import dynamic from 'next/dynamic'
 
-import CardList from "@/components/CardList"
-import ViewUserButton from "@/components/ViewUserButton"
-import { usePosts } from "@/features/post"
+import CardPost from "@/components/elements/CardPost"
 import TitlePage from "@/components/elements/TitlePage"
-import { Post } from "@/types/post"
-
-
-
-const renderElement = (posts: Post[]) => posts?.map((post) => {
-    return (
-        <CardList key={post.id}>
-            <p>{post.id}</p>
-            <h1>{post.title}</h1>
-            <p>{post.body}</p>
-            <ViewUserButton userId={post.userId} />
-        </CardList>
-    )
+const LiveDate = dynamic(() => import('@/components/elements/LiveDate'), {
+  ssr: false,
 })
 
+import { usePosts } from "@/features/post"
+import { Post } from "@/types/post"
+
+const renderElement = (posts: Post[]) => posts?.map(post => <CardPost key={post.id} data={post} />)
+
 export default function Posts() {
-    const { data } = usePosts()
-    return (
-        <>
-            {/* <p>{new Date().toLocaleTimeString()}</p> */}
-            <TitlePage title="Post Page"/>
-            {renderElement(data?.data)}
-        </>
-    )
+  const { data } = usePosts()
+  return (
+    <>
+      <LiveDate />
+      <TitlePage title="Post Page" />
+      <div className="px-10 flex flex-col gap-10">
+        {renderElement(data?.data)}
+      </div>
+    </>
+  )
 }
