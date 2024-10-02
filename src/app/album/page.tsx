@@ -1,3 +1,4 @@
+"use client"
 import TitlePage from "@/components/elements/TitlePage";
 
 export default function Album() {

@@ -10,18 +10,20 @@ const LiveDate = dynamic(() => import('@/components/elements/LiveDate'), {
 
 import { usePosts } from "@/features/post"
 import { Post } from "@/types/post"
+import ContainerBase from "@/components/layouts/ContainerBase"
+import Loader from "@/components/elements/Loader"
 
 const renderElement = (posts: Post[]) => posts?.map(post => <CardPost key={post.id} data={post} />)
 
 export default function Posts() {
-  const { data } = usePosts()
+  const { data, isLoading } = usePosts()
   return (
-    <>
+    <ContainerBase>
       <LiveDate />
       <TitlePage title="Post Page" />
       <div className="px-10 flex flex-col gap-10">
-        {renderElement(data?.data)}
+        {isLoading ? <Loader/> : renderElement(data?.data)}
       </div>
-    </>
+    </ContainerBase>
   )
 }
