@@ -22,7 +22,7 @@ export default function Posts() {
       <LiveDate />
       <TitlePage title="Post Page" />
       <div className="px-10 flex flex-col gap-10">
-        {isLoading ? <Loader/> : renderElement(data?.data)}
+        {isLoading ? <Loader/> : renderElement(data)}
       </div>
     </ContainerBase>
   )
